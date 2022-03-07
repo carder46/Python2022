@@ -37,8 +37,6 @@ if passion == "Mel Gibson" or passion == "mel gibson":
 	print(f"Correct...")
 else:
 	print(f"Wrong, the answer is Mel Gibson.")
-#7
-print("GO TO www.roblox.com/freerobux" * 1000)  and print("GET FREE ROBUX FROM THERE")
 
 
 
