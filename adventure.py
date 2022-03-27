@@ -1,46 +1,76 @@
 #import all the functions from adventurelib
 from adventurelib import *
 
-#rooms
-space = Room("You are drifting in space. You see a spaceship")
-airlock = Room("You are in an airlock")
-cargo = Room("You are in the cargo bay")
-docking = Room("You are in the docking bay")
-hallway = Room("You are in the spaceship hallway")
-quarters = Room("You are in the crew quarters, there is a locker.")
-bridge = Room("You are on the bridge, there is a sussy dead body")
-escape_pods = Room("You are in the escape pods")
-mess_hall = Room("You are in the mess hall #YummyInMyTummy")
+################
+#DEFINE ROOM
+################
 
-#room connections
-docking.west = cargo
-hallway.north = cargo
-hallway.east = bridge
-hallway.south = mess_hall
-hallway.west = airlock
-bridge.south = escape_pods
-mess_hall.west = quarters
-quarters.north = airlock
+outside = Room("You are standing facing the house, it is warm and human, you hear the bystanders mourning the loss. Talk to the police chief.")
+entryway = Room("You are in the entryway. It is clean and nothing has been touched.")
+kitchen = Room("You enter the kitchen, looks normal. However a knife is missing from the magnetic stand.")
+diningroom = Room("You are in the dining room, the curtains are moving as if there is a gust of wind behind them.")
+livingroom = Room("You are in the living room, this house is oddly clean from a crime scene. What's that smell? A light odour seems to be coming from the east.")
+masterbedroom = Room("You enter the master bedroom, the smell is alot stronger now. The curtains are still closed but it's midday, a glass of water is resting on the bedside table and a netflix movie is playing on the TV. The bed is unmade and still messy, what's happening?")
+ensuite = Room("You enter the ensuite. There is a handprint on the shower curtain, what is that smell? It's even stronger now, it is unbearable.")
+courtyard = Room("You are in the courtyard, a nice break from inside with fresh air and nice smelling flowers.")
+guestbedroom = Room("You are in the guest bedroom, there is a rug, however the room looks normal.")
+guestensuite = Room("You enter the guest enuite, nothing interesting here.")
 
 
-#variables
-current_room = space
+################
+#ROOM CONNECTIONS
+################
+outside.north = entryway
+entryway.north = livingroom
+entryway.east = kitchen
+entryway.south = outside
+entryway.west = diningroom
+kitchen.north = masterbedroom
+masterbedroom.north = ensuite
+masterbedroom.south = kitchen
+masterbedroom.west = livingroom
+livingroom.east = masterbedroom
+livingroom.south = entryway
+livingroom.north = courtyard
+livingroom.west = guestbedroom
+diningroom.east = entryway
+diningroom.north = guestbedroom
+guestbedroom.north = guestensuite
+guestbedroom.south = diningroom
+courtyard.south = livingroom
+courtyard.west = guestensuite
 
-#binds 
-@when("jump")
-def jump():
-	print("You jump")
 
-@when("enter airlock")
-@when("enter spaceship")
-@when("enter ship")
-def enter_airlock():
+################
+#VARIABLE
+################
+current_room = outside
+
+################
+#BINDS
+################ 
+#@when("go north")
+#def jump():
+#	print("You jump")
+
+@when("talk to")
+@when("talk to chief")
+@when("talk to police chief")
+def police_chief():
 	global current_room
-	if current_room == space:
-		print("You haul yourself into the airlock")
-		current_room = airlock
+	if current_room == outside:
+		print("Hello, Detective. This is the first murder case that has occurred in the town in 30 years. We do not have an established Investigation Bureau so I thank you kindly for choosing to come and lead this investigation. Due to safety standards, we are yet to enter the house so cannot provide the location of the body. Please find the body and report it back to us as soon as possible, thank you.")
+
+@when("enter house")
+@when("enter home")
+@when("enter door")
+def enter_entryway():
+	global current_room
+	if current_room == outside:
+		print("You enter the house, good luck Detective")
+		current_room = entryway
 	else: 
-		print("There is no airlock here")
+		print("There is no house here")
 	print(current_room)
 
 @when("go DIRECTION")
@@ -63,9 +93,10 @@ def look():
 
 	
 
-#EVERYTHING GOES ABOVE HERE - DO NOT CHANGE
-#ANYTHING BELOW THIS LINE
-#the main function
+################
+#MAIN FUNCTION
+################
+
 def main():
 	print(current_room)
 	start()
