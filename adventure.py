@@ -38,12 +38,12 @@ guestbedroom.south = diningroom
 courtyard.south = livingroom
 courtyard.west = guestensuite
 
-
 ################
 #VARIABLE
 ################
 current_room = outside
-
+photo_taken = False
+inventory = Bag()
 ################
 #OUTSIDE
 ################ 
@@ -57,6 +57,8 @@ current_room = outside
 camera = Item("camera","cam","c")
 camera.description = ("The crime scene camera use to take photos of the body")
 
+outside.items.add(camera)
+
 @when("get ITEM")
 @when("take ITEM")
 @when("pick up ITEM")
@@ -69,7 +71,7 @@ def get_item(item):
 	else:
 		print("There is no camera here, you have to get it outside from the police chief.")
 
-outside.items.add(camera)
+
 
 @when("inventory")
 def check_inventory():
@@ -77,11 +79,14 @@ def check_inventory():
 	for item in inventory:
 		print(item)
 
+
+
 @when("use ITEM")
 def use(item):
+	global photo_taken
 	if inventory.find(item)==camera and current_room == ensuite:
 		print("You take a photo of the body lets get going.")
-		photo_taken == True
+		photo_taken = True
 		print("Look at your available exits, navigate your way out of the house.")
 	else:
 		print("Save the camera memory, use it when you find the body.")
@@ -89,25 +94,27 @@ def use(item):
 @when("talk to")
 @when("talk to chief")
 @when("talk to police chief")
-if photo_taken == True and current_room == outside:
-	print("I am glad you are back, did you find the body? I assume that you have, can I have the camera?")
+def talkto():
+	if photo_taken == True and current_room == outside:
+		print("I am glad you are back, did you find the body? I assume that you have, can I have the camera?")
+	if photo_taken == False:
+		if current_room == outside:
+			print("Hello, Detective. This is the first murder case that has occurred in the town in 30 years. We do not have an established Investigation Bureau so I thank you kindly for choosing to come and lead this investigation. Due to safety standards, we are yet to enter the house so cannot provide the location of the body. Please find the body and report it back to us as soon as possible, thank you.\n TIP : Use 'inspect' to find clues about the room that you are in.\n TIP : Use 'exits' to find available exits!")
+			print("Take this camera, take a photo when you find it and bring it back.")
+		else:
+			print("I am glad you are back, did you find the body? I assume that you have, can I have the camera?")
 
+		
 @when("give ITEM")
 @when("hand ITEM")
-if photo_taken == True and current_room == outside:
-	print("Thank you, let me look at the photo now...\n This isn't the victim? There's a second body? Wait what?")
-	print("To be continued...")
-	quit()
-
-
-@when("talk to")
-@when("talk to chief")
-@when("talk to police chief")
-def police_chief():
-	global current_room
-	if current_room == outside:
-		print("Hello, Detective. This is the first murder case that has occurred in the town in 30 years. We do not have an established Investigation Bureau so I thank you kindly for choosing to come and lead this investigation. Due to safety standards, we are yet to enter the house so cannot provide the location of the body. Please find the body and report it back to us as soon as possible, thank you.\n TIP : Use 'inspect' to find clues about the room that you are in.\n TIP : Use 'exits' to find available exits!")
-		print("Take this camera, take a photo when you find it and bring it back.")
+def give(item):
+	if photo_taken == False and current_room == outside:
+		print("There is no photo here? Whatever, I will just get someone else to do it for me. Don't come back here, do your job next time.")
+		quit()	
+	if photo_taken == True and current_room == outside:
+		print("Thank you, let me look at the photo now...\n This is perfect, thank you. One more thing...\n *your vision goes black*")
+		quit()
+	
 
 @when("enter house")
 @when("enter home")
@@ -141,15 +148,23 @@ def inspect():
 		print("Gosh, what is that smell, we should really hurry up because this is unbearable.")
 	if current_room == ensuite:
 		print("This has to be it, there is blood everywhere. There is a handprint on the shower curtain, but the shower curtain is closed.")
-	if curent_room == outside
+	if current_room == outside:
 		print("How about we just get inside first, the door is infront of you.")
+	if current_room == courtyard:
+		print("Wow, peaceful, I could definitely get used to this.\n You see:\n Birds, bees, flowers, a pool, a poolhouse, but nothing related to the crime. MOVE IT.")
+	if current_room == guestbedroom:
+		print("")
+	if current_room == guestensuite:
 
+courtyard
+guestbedroom
+guestensuite
 @when("go to shower curtain")
 @when("open shower curtain")
 @when("rip down shower curtain")
 def showercurtain():
 	global current_room
-	if current_room == ensuite
+	if current_room == ensuite:
 		print("There he is, you have found the body, let's take a photo for the police chief and get out of here.")
 
 @when("go to grey rug")
