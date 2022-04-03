@@ -112,7 +112,7 @@ def give(item):
 		print("There is no photo here? Whatever, I will just get someone else to do it for me. Don't come back here, do your job next time.")
 		quit()	
 	if photo_taken == True and current_room == outside:
-		print("Thank you, let me look at the photo now...\n This is perfect, thank you. One more thing...\n *your vision goes black*")
+		print("Thank you, let me look at the photo now...\n This is perfect, thank you. One more thing...\n *BANG*\n *your vision goes black*\n To be continued...")
 		quit()
 	
 
@@ -153,12 +153,11 @@ def inspect():
 	if current_room == courtyard:
 		print("Wow, peaceful, I could definitely get used to this.\n You see:\n Birds, bees, flowers, a pool, a poolhouse, but nothing related to the crime. MOVE IT.")
 	if current_room == guestbedroom:
-		print("")
+		print("That bed looks really comfy... maybe I should sleep there for a bit.")
 	if current_room == guestensuite:
+		print("Ordinary boring bathroom, very nicely designed, however.")
 
-courtyard
-guestbedroom
-guestensuite
+
 @when("go to shower curtain")
 @when("open shower curtain")
 @when("rip down shower curtain")
@@ -189,7 +188,7 @@ def dishwasher():
 @when("open curtains")
 def dining():
 	global current_room
-	if current_room == dining:
+	if current_room == diningroom:
 		print("You find :\n - A smashed window.\n")
 
 ################
