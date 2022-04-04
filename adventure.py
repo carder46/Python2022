@@ -169,6 +169,9 @@ def showercurtain():
 @when("go to grey rug")
 @when("search grey rug")
 @when("look at grey rug")
+@when("go to rug")
+@when("search rug")
+@when("look at rug")
 def rug():
 	global current_room
 	if current_room == livingroom:
@@ -191,6 +194,38 @@ def dining():
 	if current_room == diningroom:
 		print("You find :\n - A smashed window.\n")
 
+@when("lift rug")
+def lift_rug():
+	global current_room
+	if current_room == livingroom:
+		print("Nothing under here, search the rug.")
+
+@when("drink water")
+def water():
+	global current_room
+	if current_room == masterbedroom:
+		print("Ew, that's disgusting, drinking a dead mans water. Turns out it was drugged and you die.")
+		quit()
+
+@when("look at tv")
+@when("watch tv")
+def tv():
+	global current_room
+	if current_room == masterbedroom:
+		print("You look at the TV, he's been watching Ashane De Silva's tiktoks.")
+
+@when("make bed")
+def bed():
+	global current_room
+	if current_room == masterbedroom:
+		print("Aren't you a detective? You make the bed, looks nice, maybe you should be a housewife/husband.")
+		masterbedroom.description = ""
+@when("sleep in bed")
+def sleep():
+	global current_room
+	if current_room == guestbedroom:
+		print("You sleep in the bed, the murderer comes back and you die. Stay attentive next time.")
+		quit()
 ################
 #BINDS
 ################ 
@@ -224,3 +259,7 @@ def main():
 	#start the main loop
 
 main()
+
+
+
+
