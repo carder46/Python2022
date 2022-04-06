@@ -204,7 +204,7 @@ def lift_rug():
 def water():
 	global current_room
 	if current_room == masterbedroom:
-		print("Ew, that's disgusting, drinking a dead mans water. Turns out it was drugged and you die.")
+		print("Ew, that's disgusting, drinking a dead mans water. Turns out it was drugged and you die. \n TIP : Don't drink water from a dead guys house.")
 		quit()
 
 @when("look at tv")
@@ -212,15 +212,35 @@ def water():
 def tv():
 	global current_room
 	if current_room == masterbedroom:
-		print("You look at the TV, he's been watching Ashane De Silva's tiktoks.")
+		print("You look at the TV, he's been watching Ashane De Silva's tiktoks. He can't even dance, please turn the TV off...")
+
+TVon = True
+
+@when("turn on tv")
+@when("turn on")
+def tvturnon():
+	if current_room == masterbedroom and TVon == True:
+		print("You can't turn on a TV that is already on, it's kind of common sense?")
+	elif current_room == masterbedroom and TVon == False:
+		print("Don't even try, turns out the TV remote shorted and you die. Lesson Learnt?")
+		quit()
+
+@when("turn off tv")
+@when("turn off")
+def tvturnoff():
+	if current_room == masterbedroom:
+		TVon = False
+		print("You turn off the TV, thank you.")
 
 @when("make bed")
 def bed():
 	global current_room
 	if current_room == masterbedroom:
 		print("Aren't you a detective? You make the bed, looks nice, maybe you should be a housewife/husband.")
-		masterbedroom.description = ""
+		masterbedroom.description = "The room still smells horrible, but atleast now you have made the bed, so it looks somewhat presentable."
+
 @when("sleep in bed")
+@when("sleep")
 def sleep():
 	global current_room
 	if current_room == guestbedroom:
@@ -247,8 +267,10 @@ def exits():
 	print(current_room)
 	print("There are exits, to the ",current_room.exits())
 
-	
-
+@when("give up")
+def giveup():
+	print("You give up, farewell, Detective.")
+	quit()
 ################
 #MAIN FUNCTION
 ################
