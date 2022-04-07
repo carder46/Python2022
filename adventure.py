@@ -10,7 +10,7 @@ entryway = Room("You are in the entryway. It is clean and nothing has been touch
 kitchen = Room("You enter the kitchen, looks normal. However a knife is missing from the magnetic stand.")
 diningroom = Room("You are in the dining room, the curtains are moving as if there is a gust of wind behind them.")
 livingroom = Room("You are in the living room, this house is oddly clean from a crime scene. What's that smell? A light odour seems to be coming from the east.")
-masterbedroom = Room("You enter the master bedroom, the smell is alot stronger now. The curtains are still closed but it's midday, a glass of water is resting on the bedside table and a netflix movie is playing on the TV. The bed is unmade and still messy, what's happening?")
+masterbedroom = Room("You enter the master bedroom, the smell is alot stronger now. The curtains are still closed but it's midday, a glass of water is resting on the bedside table and the TV is playing. The bed is unmade and still messy, what's happening?")
 ensuite = Room("You enter the ensuite, is this vanity a LEVIVI LEEDS FLOOR-STANDING 400MM VANITY $392.00 from plumbingworld.co.nz??")
 courtyard = Room("You are in the courtyard, a nice break from inside with fresh air and nice smelling flowers.")
 guestbedroom = Room("You are in the guest bedroom, there is a rug, however the room looks normal.")
@@ -104,6 +104,11 @@ def talkto():
 		else:
 			print("I am glad you are back, did you find the body? I assume that you have, can I have the camera?")
 
+@when("talk to cheif")
+@when("talk to police cheif")
+def talktoWRONG():
+	if current_room == outside:
+		print("Learn to spell, it's CHIEF")
 		
 @when("give ITEM")
 @when("hand ITEM")
@@ -228,6 +233,7 @@ def tvturnon():
 @when("turn off tv")
 @when("turn off")
 def tvturnoff():
+	global TVon
 	if current_room == masterbedroom:
 		TVon = False
 		print("You turn off the TV, thank you.")
