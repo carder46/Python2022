@@ -63,6 +63,9 @@ outside.items.add(camera)
 @when("take ITEM")
 @when("pick up ITEM")
 def get_item(item):
+	if item == "photo" and "camera" in inventory:
+		use("camera")
+		return
 	if item in current_room.items:
 		t = current_room.items.take(item)
 		print(t)
