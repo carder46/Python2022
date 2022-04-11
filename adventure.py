@@ -4,6 +4,7 @@ from adventurelib import *
 ################
 #DEFINE ROOM
 ################
+#this describes the room as the player enters it, eg the courtyard description will show as they 'walk' into the courtyard
 Room.items = Bag()
 outside = Room("You are standing facing the house, it is warm and human, you hear the bystanders mourning the loss. Talk to the police chief.")
 entryway = Room("You are in the entryway. It is clean and nothing has been touched.")
@@ -20,6 +21,7 @@ guestensuite = Room("You enter the guest enuite, nothing interesting here.")
 ################
 #ROOM CONNECTIONS
 ################
+#these are variables that store which direction a player must go from each team.
 outside.north = entryway
 entryway.north = livingroom
 entryway.east = kitchen
@@ -41,24 +43,23 @@ courtyard.west = guestensuite
 ################
 #VARIABLE
 ################
+#this section includes variables for when the game begins, the player starts outside and the photo is not taken, hence the 'False'
 current_room = outside
 photo_taken = False
 inventory = Bag()
-################
-#OUTSIDE
-################ 
-#@when("go north")
-#def jump():
-#	print("You jump")
+
 
 ################
 #ITEMS
 ################
+#this creates the item called camera
 camera = Item("camera","cam","c")
 camera.description = ("The crime scene camera use to take photos of the body")
 
+#this adds the camera item to the outside room
 outside.items.add(camera)
 
+#this allows the player to pick the camera up and take it
 @when("get ITEM")
 @when("take ITEM")
 @when("pick up ITEM")
@@ -69,21 +70,20 @@ def get_item(item):
 	if item in current_room.items:
 		t = current_room.items.take(item)
 		print(t)
-		inventory.add(t)
+		inventory.add(t) #this adds the camera to the inventory
 		print(f"You take the {item} from the police chief.")
 	else:
 		print("There is no camera here, you have to get it outside from the police chief.")
 
 
-
+#this allows the player to check their inventory to make sure they either have items, or have no items.
 @when("inventory")
 def check_inventory():
 	print("You have")
 	for item in inventory:
 		print(item)
 
-
-
+#this code is for the end when the player finds the body and needs to take a photo.
 @when("use ITEM")
 def use(item):
 	global photo_taken
@@ -93,6 +93,7 @@ def use(item):
 		print("Look at your available exits, navigate your way out of the house.")
 	else:
 		print("Save the camera memory, use it when you find the body.")
+
 
 @when("talk to")
 @when("talk to chief")
