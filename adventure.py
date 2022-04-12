@@ -262,6 +262,16 @@ def sleep():
 	if current_room == guestbedroom:
 		print("You sleep in the bed, the murderer comes back and you die. Stay attentive next time.")
 		quit()
+
+@when("eggs")
+def egg():
+	eggs = input("Do you like scrambled eggs?\n")
+	if eggs.lower() == "yes":
+		print("ARGHHHHHHHHHHHHHH scrambled eggs are like eating rubber")
+		quit()
+	else:
+		print("Good, yay, you win!!")
+		quit()
 ################
 #BINDS
 ################ 
