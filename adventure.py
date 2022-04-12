@@ -6,7 +6,7 @@ from adventurelib import *
 ################
 #this describes the room as the player enters it, eg the courtyard description will show as they 'walk' into the courtyard
 Room.items = Bag()
-outside = Room("You are standing facing the house, it is warm and human, you hear the bystanders mourning the loss. Talk to the police chief.")
+outside = Room("You are standing facing the house, it is warm and humid, you hear the bystanders mourning the loss. Talk to the police chief.")
 entryway = Room("You are in the entryway. It is clean and nothing has been touched.")
 kitchen = Room("You enter the kitchen, looks normal. However a knife is missing from the magnetic stand.")
 diningroom = Room("You are in the dining room, the curtains are moving as if there is a gust of wind behind them.")
@@ -137,6 +137,12 @@ def enter_entryway():
 		print("There is no house here")
 	print(current_room)
 
+@when("go through window")
+@when("jump out of window")
+@when("jump out window")
+def windowjump():
+	if current_room == diningroom:
+		print("You ")
 ################
 #INSPECT
 ################ 
